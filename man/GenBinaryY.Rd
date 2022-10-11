@@ -13,8 +13,7 @@ GenBinaryY(
   gamma = NULL,
   id,
   data,
-  q = 10,
-  Yname = "Y"
+  q = 10
 )
 }
 \arguments{
@@ -36,10 +35,9 @@ GenBinaryY(
 
 \item{q}{a scalar to denote the number of quadrature points used for GH numerical integration}
 
-\item{Yname}{a character string of the name of new binary variable; default=Y}
 }
 \value{
-This function returns the data object augmented with a binary response vector named Yname.
+The function returns a binary response vector.
 }
 \description{
 Generate binary response data from a Marginalized Transition and Latent Variable Model
@@ -55,6 +53,6 @@ time   = unlist( sapply( as.list(nclust), function(ZZ) seq(ZZ)-1 ) )
 data   = data.frame(id, time, Xe)
 data   = data[order(data$id, data$time),]
 newdata = GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
-beta=c(-2.5, 0.25, 0.25, 0.1), sigma=1, gamma=1, id=id, data=data, q=20, Yname = "binY")}
+beta=c(-2.5, 0.25, 0.25, 0.1), sigma=1, gamma=1, id=id, data=data, q=20)}
 
 }

@@ -1,4 +1,4 @@
-test_that("GenBinary Y returns a data.frame with the outcome variable", {
+test_that("GenBinary Y returns a vector", {
 
   N      = 100
   nclust = sample( seq(10,10), N, replace=TRUE)
@@ -9,11 +9,9 @@ test_that("GenBinary Y returns a data.frame with the outcome variable", {
   data   = data[order(data$id, data$time),]
   newdat = GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
                        beta=c(-2.5, 0.25, 0.25, 0.1),
-                      sigma=1, gamma=1, id=id, data=data, q=20, Yname = "binY")
+                      sigma=1, gamma=1, id=id, data=data, q=20)
 
-  expect_equal(class(newdat), "data.frame")
-  expect_equal(length(unique(newdat$id)), 100)
-  expect_true("binY" %in% colnames(newdat))
+  expect_equal(class(newdat), "numeric")
 })
 
 test_that("Inputs in GenBinaryY are correctly specified", {
@@ -27,24 +25,24 @@ test_that("Inputs in GenBinaryY are correctly specified", {
   data   = data[order(data$id, data$time),]
   newdat = GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
                       beta=c(-2.5, 0.25, 0.25, 0.1),
-                      sigma=1, gamma=1, id=id, data=data, q=20, Yname = "binY")
+                      sigma=1, gamma=1, id=id, data=data, q=20)
 
   expect_error(GenBinaryY(mean.formula=~time*Xe,
                           beta=c(-2.5, 0.25, 0.25, 0.1),
-                          id=id, data=data, q=20, Yname = "binY"))
+                          id=id, data=data, q=20))
   expect_error(GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
                           sigma=1, gamma=1,
-                          id=id, data=data, q=20, Yname = "binY"))
+                          id=id, data=data, q=20))
   expect_error(GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
                           beta=c(-2.5, 0.25, 0.25, 0.1),
                           sigma=NULL, gamma=1,
-                          id=id, data=data, q=20, Yname = "binY"))
+                          id=id, data=data, q=20))
   expect_error(GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
                           beta=c(-2.5, 0.25, 0.25, 0.1),
                           sigma=1, gamma=NULL,
-                          id=id, data=data, q=20, Yname = "binY"))
+                          id=id, data=data, q=20))
   expect_error(GenBinaryY(mean.formula=~time*Xe,
                           beta=c(-2.5, 0.25, 0.25, 0.1),
-                          id=id, data=data, q=20, Yname = "binY"))
+                          id=id, data=data, q=20))
 
 })

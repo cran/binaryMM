@@ -95,7 +95,7 @@ summary(mod.mt)
 
 ### Generate Outcome Data under a Marginalized Model Framework
 
-The function `GenerateBinayY` in the `binaryMM` package allows users to generate outcome data under a marginalized model framework. The code below shows how the data can be generated. Note that the output of `GenerateBinayY` is a dataframe that will contain the covariates used to generate the outcome as well as the newly generated outcome variable.
+The function `GenerateBinayY` in the `binaryMM` package allows users to generate outcome data under a marginalized model framework. The code below shows how the data can be generated. Note that the output of `GenerateBinayY` is the longitudinal outcome vector.
 
 ```{r}
 set.seed(1)
@@ -106,6 +106,6 @@ Xe      = rep(rbinom(N,size=1,prob=.5), nclust) # binary exposure
 time    = unlist( sapply( as.list(nclust), function(ZZ) seq(ZZ)-1 ) )
 data    = data.frame(id, time, Xe)
 data    = data[order(data$id, data$time),]
-newdata = GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
+Y = GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
           beta=c(-2.5, 0.25, 0.25, 0.1), sigma=1, gamma=1, id=id, data=data, q=20, Yname = "binY")
 ```

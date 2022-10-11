@@ -9,9 +9,8 @@
 #' @param id a vector of cluster identifiers (it should be the same length nrow(data))
 #' @param data a required data frame
 #' @param q a scalar to denote the number of quadrature points used for GH numerical integration
-#' @param Yname a character string of the name of new binary variable; default=Y
 #'
-#' @return This function returns the data object augmented with a binary response vector named Yname.
+#' @return The function returns a binary response vector.
 #' @export
 #'
 #' @examples
@@ -25,11 +24,11 @@
 #' data   = data.frame(id, time, Xe)
 #' data   = data[order(data$id, data$time),]
 #' newdata = GenBinaryY(mean.formula=~time*Xe, lv.formula=~1, t.formula=~1,
-#' beta=c(-2.5, 0.25, 0.25, 0.1), sigma=1, gamma=1, id=id, data=data, q=20, Yname = "binY")}
+#' beta=c(-2.5, 0.25, 0.25, 0.1), sigma=1, gamma=1, id=id, data=data, q=20)}
 #'
 GenBinaryY <- function(mean.formula, lv.formula = NULL, t.formula = NULL,
                        beta = NULL, sigma = NULL, gamma = NULL, id, data,
-                       q = 10, Yname='Y')
+                       q = 10)
 {
   if (is.null(lv.formula) & is.null(t.formula)) {
     stop("Specify association model (both lv.formula and t.formula arguments cannot be NULL).")
@@ -111,11 +110,10 @@ GenBinaryY <- function(mean.formula, lv.formula = NULL, t.formula = NULL,
         Y[it]   = as.integer( runif(1)<MuC[it] )
       }
     } else {
-      Y <- Y #Y <- NA - ask J about this!
+      Y <- Y
     }
     YY[[ix]] <- Y
   }
   Y <- unlist(YY)
-  data0[,Yname] <- Y
-  data0
+  Y
 }
